@@ -101,16 +101,16 @@ def findReferences(str):
 #method to change file string(actually a list right now), returns string to be written to file
 #If you write a method that changes something, it is preffered that you call the method in here
 def fixChapter(chap, references, p, kls):
-    #chap is the file string(actually a list), references is the specific references for the file,
-    #and p is the paras variable(not sure if needed) kls is the KLSadd.tex as a list
-    count = 0 #count is used to represent the values in count
-    for i in references:
-        #Place before References paragraph
-        chap[i-2] += "%KLSadd additions:"
-        chap[i-2] += p[count]
-        chap[i-2] += "%End of KLSadd additions"
-        count+=1
-    chap[i-1] += p[count]
+        #chap is the file string(actually a list), references is the specific references for the file,
+        #and p is the paras variable(not sure if needed) kls is the KLSadd.tex as a list
+        count = 0 #count is used to represent the values in count
+        for i in references:
+                #Place before References paragraph
+                chap[i-2] += "\\large\\bf KLSadd additions: "
+                chap[i-2] += p[count]
+                chap[i-2] += "\\large\\bf End of KLSadd additions"
+                count+=1
+        chap[i-1] += p[count]
 
     chap = prepareForPDF(chap)
     cms = getCommands(kls)
