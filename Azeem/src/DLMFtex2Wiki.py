@@ -35,18 +35,11 @@ def modLabel(label):
     return newlabel
 
 
-def DLMF(ofname,glossary,mmd,n):
+def DLMF(ofname,mmd,llinks,n):
     for iterations in range(0, 1):
-        try:
-            tex = open(ofname, 'r')
-            glossary = open(sys.argv[3], "r")
-            mainFile = open(mmd, "r")
-            lLinks = open(sys.argv[5], 'r')
-        except (IOError, IndexError):
-            tex = open("../../data/ZE.3.tex", "r")
-            glossary = open("../../data/new.Glossary.csv", "r")
-            mainFile = open("../../data/OrthogonalPolynomials.mmd", "r")
-            lLinks = open("../../data/BruceLabelLinks", "r")
+        tex = open(ofname, 'r')
+        main_file = open(mmd, "r")
+        lLinks = open(llinks, 'r')
         mainPrepend = ""
         mainWrite = open("ZetaFunctions.mmd.new", "w")
         lLink = lLinks.readlines()
@@ -108,7 +101,7 @@ def DLMF(ofname,glossary,mmd,n):
                 mainText = "{{#set:Section=0}}\n" + mainText
                 mainWrite.write(mainText)
                 mainWrite.close()
-                mainFile.close()
+                main_file.close()
                 copyfile(mmd, 'ZetaFunctions.mmd.new')
                 parse = False
             elif "\\title" in line and parse:
@@ -568,8 +561,8 @@ def DLMF(ofname,glossary,mmd,n):
                 if isnumber(section) == False:
                     return eqCounter
                 append_text("<span class=\"plainlinks\">[HTTP://DLMF.NIST.GOV/" +
-                            section + "#" + equation + " Equation (" + equation[1:] + "), "
-                                                                                      "Section " + section + "]</span> of [[Bibliography#DLMF|'''DLMF''']].\n\n")
+                            section + "#" + equation + " Equation (" + equation[1:] + "), Section " + section +
+                            "]</span> of [[Bibliography#DLMF|'''DLMF''']].\n\n")
                 append_text("== URL links ==\n\nWe ask users to provide relevant URL links in this space.\n\n")
                 if eqCounter < endNum:
                     append_text("<br /><div id=\"drmf_foot\">\n")
@@ -795,4 +788,7 @@ def DLMF(ofname,glossary,mmd,n):
 
 
 if __name__ == "__main__":
-    DLMF(0);
+    tex = "../../data/ZE.3.tex"
+    mainFile = "../../data/OrthogonalPolynomials.mmd"
+    lLinks = "../../data/BruceLabelLinks"
+    DLMF(tex, mainFile, lLinks, 0)
